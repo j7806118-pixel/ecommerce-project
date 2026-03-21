@@ -1,0 +1,16 @@
+from django.db import models
+
+class Order(models.Model):
+    name = models.CharField(max_length=255, default="N/A")
+    email = models.EmailField()
+    address = models.TextField(default="N/A")
+
+    product_name = models.CharField(max_length=255)
+    quantity = models.IntegerField()
+    price = models.FloatField()
+
+    order_id = models.CharField(max_length=50, default="ORD-000")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name

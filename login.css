@@ -1,0 +1,128 @@
+body{
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+margin:0;
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+background: linear-gradient(135deg,#667eea,#764ba2);
+}
+
+/* Login Box */
+
+.login-container{
+width:340px;
+padding:40px 35px;
+border-radius:15px;
+background: rgba(255,255,255,0.15);
+backdrop-filter: blur(12px);
+box-shadow:0 15px 40px rgba(0,0,0,0.25);
+text-align:center;
+color:white;
+animation: fadeIn 0.8s ease;
+}
+
+/* Title */
+
+.login-container h2{
+margin-bottom:25px;
+font-weight:600;
+letter-spacing:1px;
+}
+
+/* Inputs */
+
+.login-container input{
+width:100%;
+padding:12px 15px;
+margin:12px 0;
+border:none;
+border-radius:8px;
+background:rgba(255,255,255,0.2);
+color:white;
+font-size:14px;
+outline:none;
+transition:0.3s;
+}
+
+.login-container input::placeholder{
+color:#e0e0e0;
+}
+
+.login-container input:focus{
+background:rgba(255,255,255,0.3);
+box-shadow:0 0 8px rgba(255,255,255,0.4);
+}
+
+/* Button */
+
+.login-container button{
+width:100%;
+padding:12px;
+margin-top:15px;
+border:none;
+border-radius:8px;
+background: linear-gradient(135deg,#00c6ff,#0072ff);
+color:white;
+font-size:15px;
+font-weight:600;
+cursor:pointer;
+transition:0.3s;
+box-shadow:0 5px 15px rgba(0,0,0,0.3);
+}
+
+.login-container button:hover{
+transform:translateY(-2px);
+box-shadow:0 10px 25px rgba(0,0,0,0.4);
+}
+
+/* Signup text */
+
+.login-container p{
+margin-top:20px;
+font-size:14px;
+}
+
+.login-container a{
+color:#fff;
+font-weight:600;
+text-decoration:none;
+}
+
+.login-container a:hover{
+text-decoration:underline;
+}
+
+/* Animation */
+
+@keyframes fadeIn{
+from{
+opacity:0;
+transform:translateY(-20px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+/*login eye*/
+.password-box{
+position:relative;
+}
+
+.password-box input{
+width:100%;
+padding:10px;
+margin:10px 0;
+border:1px solid #ccc;
+border-radius:5px;
+}
+
+.password-box i{
+position:absolute;
+right:12px;
+top:50%;
+transform:translateY(-50%);
+cursor:pointer;
+color:#555;
+}

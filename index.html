@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ecommerce</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+
+/* GENERAL */
+
+body{
+font-family:Arial;
+margin:0;
+background:#f5f5f5;
+}
+
+/* HEADER */
+
+header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px;
+background:white;
+box-shadow:0 3px 10px rgba(0,0,0,0.1);
+}
+
+.nav{
+display:flex;
+gap:20px;
+list-style:none;
+}
+
+.nav a{
+text-decoration:none;
+color:#333;
+font-weight:600;
+cursor:pointer;
+}
+
+#cart-count{
+background:#088178;
+color:white;
+padding:2px 7px;
+border-radius:50%;
+font-size:12px;
+}
+
+/* PRODUCTS */
+
+#products{
+display:flex;
+gap:30px;
+padding:40px;
+flex-wrap:wrap;
+}
+
+.pro{
+width:220px;
+background:white;
+padding:15px;
+border-radius:10px;
+box-shadow:0 4px 15px rgba(0,0,0,0.08);
+transition:0.3s;
+position:relative;
+}
+
+.pro:hover{
+transform:translateY(-8px);
+box-shadow:0 8px 25px rgba(0,0,0,0.15);
+}
+
+.pro img{
+width:100%;
+border-radius:10px;
+}
+
+.des span{
+color:gray;
+font-size:14px;
+}
+
+.price{
+color:#088178;
+font-size:18px;
+}
+
+.cart{
+position:absolute;
+bottom:15px;
+right:15px;
+background:#088178;
+color:white;
+padding:10px;
+border-radius:50%;
+cursor:pointer;
+}
+
+/* CART PAGE */
+
+#cart-page{
+display:none;
+padding:40px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+background:white;
+}
+
+th,td{
+padding:15px;
+border-bottom:1px solid #ddd;
+text-align:center;
+}
+
+#cart-page button{
+background:#088178;
+color:white;
+border:none;
+padding:5px 10px;
+cursor:pointer;
+}
+
+/* TOAST */
+
+#toast{
+position:fixed;
+bottom:30px;
+right:30px;
+background:#088178;
+color:white;
+padding:12px 20px;
+border-radius:6px;
+opacity:0;
+transition:0.4s;
+}
+
+#toast.show{
+opacity:1;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+
+<h2>Shop</h2>
+
+<ul class="nav">
+
+<li><a onclick="showProducts()">Home</a></li>
+
+<li>
+<a onclick="showCart()">
+<i class="fa-solid fa-bag-shopping"></i>
+<span id="cart-count">0</span>
+</a>
+</li>
+
+</ul>
+
+</header>
+
+<!-- PRODUCTS -->
+
+<section id="products">
+
+<div class="pro">
+
+<img src="https://picsum.photos/200?1">
+
+<div class="des">
+<span>Adidas</span>
+<h5 class="product-name">Astronaut T-Shirt</h5>
+<h4 class="price">₹479</h4>
+</div>
+
+<i class="fa-solid fa-cart-shopping cart add-cart"></i>
+
+</div>
+
+
+<div class="pro">
+
+<img src="https://picsum.photos/200?2">
+
+<div class="des">
+<span>Nike</span>
+<h5 class="product-name">Summer Shirt</h5>
+<h4 class="price">₹599</h4>
+</div>
+
+<i class="fa-solid fa-cart-shopping cart add-cart"></i>
+
+</div>
+
+
+<div class="pro">
+
+<img src="https://picsum.photos/200?3">
+
+<div class="des">
+<span>Puma</span>
+<h5 class="product-name">Casual Cotton Shirt</h5>
+<h4 class="price">₹699</h4>
+</div>
+
+<i class="fa-solid fa-cart-shopping cart add-cart"></i>
+
+</div>
+
+</section>
+
+<!-- CART -->
+
+<section id="cart-page">
+
+<h2>Your Cart</h2>
+
+<table>
+
+<thead>
+
+<tr>
+<th>Remove</th>
+<th>Image</th>
+<th>Product</th>
+<th>Price</th>
+<th>Quantity</th>
+<th>Subtotal</th>
+</tr>
+
+</thead>
+
+<tbody id="cart-items"></tbody>
+
+</table>
+
+<h3 id="cart-total">Total: ₹0</h3>
+
+</section>
+
+<div id="toast">Item Added to Cart 🛒</div>
+
+<script>
+
+/* PAGE SWITCH */
+
+function showCart(){
+
+document.getElementById("products").style.display="none"
+document.getElementById("cart-page").style.display="block"
+
+displayCart()
+
+}
+
+function showProducts(){
+
+document.getElementById("products").style.display="flex"
+document.getElementById("cart-page").style.display="none"
+
+}
+
+/* ADD TO CART */
+
+const carts=document.querySelectorAll(".add-cart")
+
+carts.forEach(cart=>{
+
+cart.addEventListener("click",()=>{
+
+const product=cart.closest(".pro")
+
+const name=product.querySelector(".product-name").innerText
+const price=product.querySelector(".price").innerText
+const image=product.querySelector("img").src
+
+addToCart(name,price,image)
+
+showToast()
+
+})
+
+})
+
+function addToCart(name,price,image){
+
+let cartItems=JSON.parse(localStorage.getItem("cart")) || []
+
+let existing=cartItems.find(item=>item.name===name)
+
+if(existing){
+
+existing.quantity++
+
+}else{
+
+cartItems.push({
+name:name,
+price:price,
+image:image,
+quantity:1
+})
+
+}
+
+localStorage.setItem("cart",JSON.stringify(cartItems))
+
+updateCartCount()
+
+}
+
+/* CART COUNT */
+
+function updateCartCount(){
+
+let cartItems=JSON.parse(localStorage.getItem("cart")) || []
+
+document.getElementById("cart-count").innerText=cartItems.length
+
+}
+
+updateCartCount()
+
+/* DISPLAY CART */
+
+function displayCart(){
+
+let cartItems=JSON.parse(localStorage.getItem("cart")) || []
+
+const cartTable=document.getElementById("cart-items")
+
+const cartTotal=document.getElementById("cart-total")
+
+cartTable.innerHTML=""
+
+let total=0
+
+cartItems.forEach((item,index)=>{
+
+let priceNumber=parseInt(item.price.replace("₹",""))
+
+let subtotal=priceNumber*item.quantity
+
+total+=subtotal
+
+cartTable.innerHTML+=`
+
+<tr>
+
+<td>
+<button onclick="removeItem(${index})">X</button>
+</td>
+
+<td>
+<img src="${item.image}" width="70">
+</td>
+
+<td>${item.name}</td>
+
+<td>${item.price}</td>
+
+<td>
+
+<button onclick="decrease(${index})">-</button>
+
+${item.quantity}
+
+<button onclick="increase(${index})">+</button>
+
+</td>
+
+<td>₹${subtotal}</td>
+
+</tr>
+
+`
+
+})
+
+cartTotal.innerText="Total: ₹"+total
+
+}
+
+/* QUANTITY */
+
+function increase(index){
+
+let cartItems=JSON.parse(localStorage.getItem("cart"))
+
+cartItems[index].quantity++
+
+localStorage.setItem("cart",JSON.stringify(cartItems))
+
+displayCart()
+
+}
+
+function decrease(index){
+
+let cartItems=JSON.parse(localStorage.getItem("cart"))
+
+if(cartItems[index].quantity>1){
+
+cartItems[index].quantity--
+
+}else{
+
+cartItems.splice(index,1)
+
+}
+
+localStorage.setItem("cart",JSON.stringify(cartItems))
+
+displayCart()
+
+}
+
+/* REMOVE */
+
+function removeItem(index){
+
+let cartItems=JSON.parse(localStorage.getItem("cart"))
+
+cartItems.splice(index,1)
+
+localStorage.setItem("cart",JSON.stringify(cartItems))
+
+displayCart()
+
+updateCartCount()
+
+}
+
+/* TOAST */
+
+function showToast(){
+
+const toast=document.getElementById("toast")
+
+toast.classList.add("show")
+
+setTimeout(()=>{
+toast.classList.remove("show")
+},2000)
+
+}
+
+</script>
+
+</body>
+</html>
