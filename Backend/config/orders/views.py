@@ -1,8 +1,17 @@
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from .models import Order
 import json
 from django.views.decorators.csrf import csrf_exempt
 
+# -------------------------
+# Home view for root URL
+# -------------------------
+def home(request):
+    return HttpResponse("Welcome to My E-commerce Site!")
+
+# -------------------------
+# Existing create_order view
+# -------------------------
 @csrf_exempt
 def create_order(request):
     if request.method == "POST":
