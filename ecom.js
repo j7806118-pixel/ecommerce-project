@@ -556,7 +556,7 @@ function placeOrder() {
   };
 
   // 🚀 SEND TO DJANGO
-  fetch("http://127.0.0.1:8000/api/create-order/", {
+  fetch("https://ecommerce-project-2-a3qr.onrender.com/api/create-order/", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
