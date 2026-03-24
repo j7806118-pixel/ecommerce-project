@@ -10,6 +10,6 @@ from orders import views  # import home view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('api.urls')),  # if you have api app
+    path('api/', include('orders.urls')),  # if you have api app
     path('', views.home),  # root URL
 ]
