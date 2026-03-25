@@ -603,7 +603,7 @@ function placeOrder() {
     console.error("❌ ERROR:", error);
 
     if (error.message.includes("Failed to fetch")) {
-      alert("❌ Backend server is not running!");
+      alert("❌ Backend connection failed!");
     } else {
       alert("❌ Error saving order to backend");
     }
